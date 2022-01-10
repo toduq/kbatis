@@ -2,6 +2,7 @@ package dev.todaka.kbatis.core
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.lang.reflect.Type
 
 class KQueryBuilderTest {
     @Test
@@ -11,12 +12,17 @@ class KQueryBuilderTest {
             values (#{id}, #{name})
         """.trimIndent()
         val arg = TestUser(3, "hoge")
-        val result = KQueryBuilder().build(query, arrayOf(arg))
+        val result = KStatementBuilder().build(query, arrayOf(arg))
 
-        assertThat(result).isEqualTo(KQuery("""
+        val args = listOf(
+            KStatement.Arg(3, Int::class.java as Type),
+            KStatement.Arg("hoge", String::class.java as Type),
+        )
+        val sql = """
             insert into user (id, name)
             values (?, ?)
-        """.trimIndent(), listOf("3", "hoge")))
+        """.trimIndent()
+        assertThat(result).isEqualTo(KStatement(sql, args))
     }
 
     data class TestUser(

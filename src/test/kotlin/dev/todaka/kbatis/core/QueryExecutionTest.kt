@@ -9,14 +9,10 @@ class QueryExecutionTest {
     @Test
     fun test() {
         ConnOpenHelper.open().use { conn ->
-            val kQuery = KQuery("""
-                select ?
-            """.trimIndent(), listOf("3"))
-            val result = QueryExecutor.execute(conn, kQuery).use { rs ->
-                rs.next()
-                rs.getString(1)
-            }
-            assertThat(result).isEqualTo("3")
+            val kQuery = KStatement.build("select ? as first, ? as second", listOf(3, "a"))
+            val expected = KResultSet(listOf("first", "second"), listOf(listOf(3, "a")))
+            val actual = QueryExecutor.execute(conn, kQuery)
+            assertThat(actual).isEqualTo(expected)
         }
     }
 }
