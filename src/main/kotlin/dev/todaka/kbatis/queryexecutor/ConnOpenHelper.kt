@@ -1,4 +1,4 @@
-package dev.todaka.kbatis.driver
+package dev.todaka.kbatis.queryexecutor
 
 import java.sql.Connection
 import java.sql.DriverManager

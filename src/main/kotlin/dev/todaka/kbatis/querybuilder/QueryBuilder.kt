@@ -1,9 +1,11 @@
-package dev.todaka.kbatis.core
+package dev.todaka.kbatis.querybuilder
+
+import dev.todaka.kbatis.core.KStatement
 
 /**
  * This class instantiate KStatement from parameters by parsing sql template.
  */
-class KStatementBuilder {
+class QueryBuilder {
     private val argRegex = """#\{([A-Za-z0-9_]+)}""".toRegex()
 
     fun build(sql: String, args: Array<out Any>?): KStatement {

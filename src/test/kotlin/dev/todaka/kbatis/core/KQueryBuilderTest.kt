@@ -1,5 +1,6 @@
 package dev.todaka.kbatis.core
 
+import dev.todaka.kbatis.querybuilder.QueryBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.lang.reflect.Type
@@ -12,7 +13,7 @@ class KQueryBuilderTest {
             values (#{id}, #{name})
         """.trimIndent()
         val arg = TestUser(3, "hoge")
-        val result = KStatementBuilder().build(query, arrayOf(arg))
+        val result = QueryBuilder().build(query, arrayOf(arg))
 
         val args = listOf(
             KStatement.Arg(3, Int::class.java as Type),

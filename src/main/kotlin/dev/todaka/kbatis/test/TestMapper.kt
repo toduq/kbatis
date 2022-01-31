@@ -1,12 +1,14 @@
 package dev.todaka.kbatis.test
 
-import dev.todaka.kbatis.core.KInsert
+import dev.todaka.kbatis.api.KInsert
 
 interface TestMapper {
-    @KInsert("""
+    @KInsert(
+        """
         insert into user (id, name)
         values (#{id}, #{name})
-    """)
+        """
+    )
     fun insert(user: User)
 }
 

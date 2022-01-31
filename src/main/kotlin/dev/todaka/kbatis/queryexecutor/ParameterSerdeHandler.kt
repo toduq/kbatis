@@ -1,5 +1,6 @@
-package dev.todaka.kbatis.core
+package dev.todaka.kbatis.queryexecutor
 
+import dev.todaka.kbatis.core.KStatement
 import java.lang.reflect.Type
 import java.sql.PreparedStatement
 import java.sql.ResultSet

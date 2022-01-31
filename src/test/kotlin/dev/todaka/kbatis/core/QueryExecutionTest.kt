@@ -1,7 +1,7 @@
 package dev.todaka.kbatis.core
 
-import dev.todaka.kbatis.driver.ConnOpenHelper
-import dev.todaka.kbatis.driver.QueryExecutor
+import dev.todaka.kbatis.queryexecutor.ConnOpenHelper
+import dev.todaka.kbatis.queryexecutor.QueryExecutor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

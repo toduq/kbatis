@@ -1,4 +1,4 @@
-package dev.todaka.kbatis.core
+package dev.todaka.kbatis.api
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

@@ -1,8 +1,7 @@
-package dev.todaka.kbatis.driver
+package dev.todaka.kbatis.queryexecutor
 
 import dev.todaka.kbatis.core.KResultSet
 import dev.todaka.kbatis.core.KStatement
-import dev.todaka.kbatis.core.ParameterSerdeHandler
 import java.sql.Connection
 
 object QueryExecutor {
