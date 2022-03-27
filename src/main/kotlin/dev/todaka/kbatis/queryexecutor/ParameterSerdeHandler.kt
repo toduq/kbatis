@@ -1,6 +1,5 @@
 package dev.todaka.kbatis.queryexecutor
 
-import dev.todaka.kbatis.core.KStatement
 import java.lang.reflect.Type
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -23,9 +22,9 @@ class ParameterSerdeHandler {
         deserializeMap[Types.VARCHAR] = StringColumnSerde()
     }
 
-    fun setParameter(ps: PreparedStatement, index: Int, arg: KStatement.Arg) {
-        getSerializer(arg.type).serialize(ps, index, arg.value)
-    }
+//    fun setParameter(ps: PreparedStatement, index: Int, arg: KStatement.Arg) {
+//        getSerializer(arg.type).serialize(ps, index, arg.value)
+//    }
 
     @Suppress("UNCHECKED_CAST")
     private fun getSerializer(type: Type): ColumnSerde<Any> {

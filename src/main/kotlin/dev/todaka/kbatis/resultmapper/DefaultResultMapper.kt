@@ -1,19 +1,18 @@
 package dev.todaka.kbatis.resultmapper
 
 import dev.todaka.kbatis.core.KBatisInitializationException
-import dev.todaka.kbatis.core.KResultSet
+import dev.todaka.kbatis.core.ResultMapper
+import dev.todaka.kbatis.core.UnmappedResult
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
-import kotlin.reflect.KClass
 
-class ResultMapper {
-    inline fun <reified T> readResult(resultSet: KResultSet) {
-        val clazz = T::class
-        clazz.constructors.first().parameters
-    }
-
-    fun findConstructor(clazz: KClass<*>) {
+class DefaultResultMapper : ResultMapper {
+    override fun <T> map(clazz: Class<T>, unmapped: UnmappedResult): List<T> {
+        val builder = MetaClassBuilderFactory.build(clazz)
+        return unmapped.rows.map { row ->
+            builder.build(row.mapIndexed { i, field -> unmapped.labels[i] to field }.toMap())
+        }
     }
 }
 
@@ -40,7 +39,7 @@ object MetaClassBuilderFactory {
 }
 
 interface MetaClassBuilder<T> {
-    fun build(fields: Map<String, Any>): T
+    fun build(fields: Map<String, Any?>): T
 }
 
 class SetterBuilder<T>(
@@ -48,7 +47,7 @@ class SetterBuilder<T>(
     private val noArgConstructor: Constructor<T>,
     private val setters: Map<String, Method>
 ) : MetaClassBuilder<T> {
-    override fun build(fields: Map<String, Any>): T {
+    override fun build(fields: Map<String, Any?>): T {
         val instance = noArgConstructor.newInstance()
         setters.forEach { (name, method) ->
             val value = fields[name]
