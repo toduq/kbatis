@@ -1,8 +1,10 @@
-package dev.todaka.kbatis.api
+package dev.todaka.kbatis.core
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class KSelect
+annotation class KSelect(
+    val value: String
+)
 
 /**
  * Insert method annotation for Mapper.

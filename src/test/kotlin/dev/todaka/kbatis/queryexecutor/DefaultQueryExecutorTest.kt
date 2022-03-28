@@ -12,7 +12,10 @@ class DefaultQueryExecutorTest {
             val executor = DefaultQueryExecutor(conn)
             val resolvedQuery = ResolvedQuery(
                 sql = "select 1 + ? as num, upper(?) as str",
-                argList = listOf(3, "some")
+                typedArgs = listOf(
+                    ResolvedQuery.TypedArg(Int::class.java, 3),
+                    ResolvedQuery.TypedArg(String::class.java, "some"),
+                )
             )
             val expected = UnmappedResult(
                 labels = listOf("num", "str"),

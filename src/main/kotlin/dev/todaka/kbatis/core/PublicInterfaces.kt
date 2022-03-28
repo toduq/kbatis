@@ -1,7 +1,11 @@
 package dev.todaka.kbatis.core
 
-interface ProxyFactory<T> {
-    fun build(proxy: Class<T>, option: ProxyFactoryOption): T
+import java.lang.reflect.Type
+import java.sql.Connection
+
+interface ProxyFactory {
+    fun <T> build(clazz: Class<T>, conn: Connection): T
+    fun <T> build(clazz: Class<T>, conn: Connection, option: ProxyFactoryOption): T
 }
 
 interface QueryBuilder {
@@ -24,13 +28,24 @@ data class ProxyFactoryOption(
 
 data class ProxyArg(
     val template: String,
-    val argMap: Map<String, Any?>,
-)
+    val namedTypedArgs: List<NamedTypedArg>,
+) {
+    data class NamedTypedArg(
+        val type: Type,
+        val paramName: String,
+        val value: Any?
+    )
+}
 
 data class ResolvedQuery(
     val sql: String,
-    val argList: List<Any?>,
-)
+    val typedArgs: List<TypedArg>,
+) {
+    data class TypedArg(
+        val type: Type,
+        val value: Any?
+    )
+}
 
 data class UnmappedResult(
     val labels: List<String>,

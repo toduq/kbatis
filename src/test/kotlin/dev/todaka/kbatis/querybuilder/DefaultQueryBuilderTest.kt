@@ -14,8 +14,12 @@ class DefaultQueryBuilderTest {
                 insert into user (id, name)
                 values (#{id}, #{name})
             """.trimIndent(),
-            argMap = mapOf(
-                "_" to User(id = 3, name = "someone")
+            namedTypedArgs = listOf(
+                ProxyArg.NamedTypedArg(
+                    type = User::class.java,
+                    paramName = "_",
+                    value = User(id = 3, name = "someone"),
+                )
             )
         )
         val expected = ResolvedQuery(
@@ -23,7 +27,10 @@ class DefaultQueryBuilderTest {
                 insert into user (id, name)
                 values (?, ?)
             """.trimIndent(),
-            argList = listOf(3, "someone")
+            typedArgs = listOf(
+                ResolvedQuery.TypedArg(Int::class.java, 3),
+                ResolvedQuery.TypedArg(String::class.java, "someone"),
+            )
         )
         assertThat(builder.build(arg)).isEqualTo(expected)
     }
