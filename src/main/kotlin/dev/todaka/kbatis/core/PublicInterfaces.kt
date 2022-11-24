@@ -18,6 +18,7 @@ interface QueryExecutor {
 
 interface ResultMapper {
     fun <T> map(clazz: Class<T>, unmapped: UnmappedResult): List<T>
+    fun <T> mapSingle(clazz: Class<T>, unmapped: UnmappedResult): T = map(clazz, unmapped)[0]
 }
 
 data class ProxyFactoryOption(

@@ -47,11 +47,7 @@ class KBatisInvocationHandler(
             }
             else -> {
                 // non-list return type
-                val results = option.resultMapper.map(method.returnType, unmappedResult)
-                if (results.size >= 2) {
-                    throw KBatisRuntimeException("too many results for non list return type found : $method")
-                }
-                results[0]
+                option.resultMapper.mapSingle(method.returnType, unmappedResult)
             }
         }
     }

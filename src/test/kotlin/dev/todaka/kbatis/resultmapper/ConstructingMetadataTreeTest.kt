@@ -19,22 +19,23 @@ class ConstructingMetadataTreeTest {
         val expected = ConstructingMetadataTree(listOf("b", "c"), listOf("a"))
         assertThat(ConstructingMetadataTreeFactory.build(MultiplePrimary::class.java)).isEqualTo(expected)
     }
-}
 
-data class Parent(
-    val a: String,
-    val b: String,
-    val nested: Child,
-    val nestedList: List<Child>,
-) {
-    data class Child(
-        val c: String,
+    data class Parent(
+        val a: String,
+        val b: String,
+        val nested: Child,
+        val nestedList: List<Child>,
+    ) {
+        data class Child(
+            val c: String,
+        )
+    }
+
+    @PrimaryKey("b", "c")
+    data class MultiplePrimary(
+        val a: Int,
+        val b: String,
+        val c: Double,
     )
-}
 
-@PrimaryKey("b", "c")
-data class MultiplePrimary(
-    val a: Int,
-    val b: String,
-    val c: Double,
-)
+}

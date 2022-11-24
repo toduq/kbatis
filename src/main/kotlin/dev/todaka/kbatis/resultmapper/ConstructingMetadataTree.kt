@@ -33,6 +33,9 @@ object ConstructingMetadataTreeFactory {
 
     private fun traverse(deser: JsonDeserializer<Any>): ConstructingMetadataTree {
         return when (deser) {
+            is CollectionDeserializer -> {
+                traverse(deser.contentDeserializer)
+            }
             is BeanDeserializer -> {
                 val simpleFields = mutableListOf<String>()
                 val nestedFields = mutableMapOf<String, ConstructingMetadataTree>()

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class IntegrationTest {
     @Test
     fun test() {
-        ConnOpenHelper.open(System.currentTimeMillis().toString()).use { conn ->
+        ConnOpenHelper.open().use { conn ->
             val mapper = DefaultProxyFactory().build(TestMapper::class.java, conn)
             mapper.createTable()
             mapper.insert(User1(1, "hoge"))
